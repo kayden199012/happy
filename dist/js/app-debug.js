@@ -1,206 +1,107 @@
 "use strict";
 
-// is
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * @description 判斷物件是否存在
+ * @param {string} item 選擇物件
+ */
 function is(item) {
   var data = $(item).is($(item));
   return data;
-} //console-log
+} // ----------------------
+// 打字效果
 
 
-function console_show(console_value) {
-  console.log('%cKK-CONSOLE', 'padding: 5px 10px;font-size: 14px;background: #2c375b; color: #fff;', console_value);
-} //resize_img
+var AutoType = /*#__PURE__*/function () {
+  function AutoType(f) {
+    _classCallCheck(this, AutoType);
+
+    // item->文字段落、itemLen->段落長度、index->段落位置
+    this.item = $(f);
+    this.itemLen = this.item.length;
+    this.index = 0; // fontArray->預設文字陣列、textIdx->字句位置、font->載入文字
+
+    this.fontArray = [];
+    this.textIdx = 0;
+    this.font = "";
+  } // 長度
 
 
-function resize_img(item, size) {
-  $(item).each(function () {
-    if ($(window).width() < size) {
-      $(this).attr('src', $(this).attr('src').replace(/computer/g, 'mobile'));
-    } else {
-      $(this).attr('src', $(this).attr('src').replace(/mobile/g, 'computer'));
-    }
-  });
-  $(window).resize(function () {
-    $(item).each(function () {
-      if ($(window).width() < size) {
-        $(this).attr('src', $(this).attr('src').replace(/computer/g, 'mobile'));
+  _createClass(AutoType, [{
+    key: "update",
+    // 更新文字
+    value: function update() {
+      this.index++;
+      this.textIdx = 0;
+      this.font = "";
+      this.putFont();
+    } // 放入字句
+
+  }, {
+    key: "putFont",
+    value: function putFont() {
+      var _this = this;
+
+      this.fontArray = this.item.eq(this.index).text().trim().split('');
+
+      if (this.textIdx < this.fontLen) {
+        $('#song-1')[0].loop = true;
+        $('#song-1')[0].play();
       } else {
-        $(this).attr('src', $(this).attr('src').replace(/mobile/g, 'computer'));
+        $('#song-1')[0].pause();
+        $('#song-2')[0].pause();
       }
-    });
-  });
-} // window width
+
+      var st = setInterval(function () {
+        if (_this.textIdx < _this.fontLen) {
+          _this.font = _this.font + _this.fontArray[_this.textIdx]; // console.log(this.font+'_')
+          // 更新位置
+
+          _this.item.eq(_this.index).html(_this.font + '_'); // 下個文字準備
 
 
-function width_size(num) {
-  var data = $(window).width() < num;
-  return data;
-} //wp toggle
+          _this.textIdx++;
+        } else {
+          // console.log(this.font)
+          // 更新位置
+          _this.item.eq(_this.index).html(_this.font); // 播放音效
 
 
-function wp_toggle() {
-  if (is('#mobile-nav-toggle')) {
-    $('#mobile-nav-toggle i').remove();
+          $('#song-1')[0].pause();
+          $('#song-2')[0].play(); // 下一段文字準備
 
-    for (var i = 0; i < 3; i++) {
-      var text = '<span></span>';
-      $('#mobile-nav-toggle').append(text);
+          window.clearInterval(st);
+
+          if (_this.index < _this.itemLen) {
+            _this.update();
+          } else {
+            setTimeout(function () {
+              $('.opening').fadeOut();
+              $('#song-2')[0].play();
+              $('#song-3')[0].play();
+            }, 1000);
+            setTimeout(function () {
+              $('.container').addClass('animated');
+            }, 1500);
+          }
+        }
+      }, 100);
+      console.log(this.fontArray);
     }
-  }
-} //svg
-
-
-function enable_svg() {
-  $('img.svg').each(function () {
-    var $img = $(this);
-    var imgID = $img.attr('id');
-    var imgClass = $img.attr('class');
-    var imgURL = $img.attr('src');
-    $.get(imgURL, function (data) {
-      // Get the SVG tag, ignore the rest   
-      var $svg = $(data).find('svg'); // Add replaced image's ID to the new SVG   
-
-      if (typeof imgID !== 'undefined') {
-        $svg = $svg.attr('id', imgID);
-      } // Add replaced image's classes to the new SVG   
-
-
-      if (typeof imgClass !== 'undefined') {
-        $svg = $svg.attr('class', imgClass + ' replaced-svg');
-      } // Remove any invalid XML tags as per http://validator.w3.org   
-
-
-      $svg = $svg.removeAttr('xmlns:a'); // Check if the viewport is set, if the viewport is not set the SVG wont't scale.   
-
-      if (!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
-        $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'));
-      } // Replace image with new SVG   
-
-
-      $img.replaceWith($svg);
-    }, 'xml');
-  });
-} //porduct-carousel
-
-
-function product_carousel() {
-  $('.owl-carousel.product-carousel').each(function () {
-    var owl = $(this);
-    owl.owlCarousel({
-      items: 1,
-      // loop:true,
-      margin: 10,
-      autoplay: true,
-      autoplayTimeout: 3000,
-      autoplayHoverPause: true
-    });
-    var imgLength = $(this).find('owl-item').length;
-
-    for (var i = 0; i < imgLength; i++) {
-      var imgSrc = $(this).find('owl-item').eq(i).find('img').attr('src');
-      $(this).find('.owl-dots .owl-dot').eq(i).children('span').css('background-image', 'url("' + imgSrc + '")');
+  }, {
+    key: "fontLen",
+    get: function get() {
+      return this.fontArray.length;
     }
-  });
-} //電腦實際寬度
+  }]);
 
-
-var GetScrollBarWidth = function GetScrollBarWidth() {
-  var creatDiv = $('<div class="outerDiv">').append($("<div class='innerDiv'>"));
-  $('body').append(creatDiv);
-  var w1 = this.getWidth('.innerDiv');
-  $('.outerDiv').css({
-    overflow: "scroll"
-  });
-  var w2 = this.getWidth('.innerDiv');
-  this.width = w1 - w2;
-  $('.outerDiv').remove();
-};
-
-GetScrollBarWidth.prototype.getWidth = function (el) {
-  var data = $(el).innerWidth();
-  return data;
-};
-
-GetScrollBarWidth.prototype.responWidth = function (width) {
-  var window_width = $(window).width() + this.width;
-
-  if (window_width < width) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-var getWidth = new GetScrollBarWidth();
-$(function () {
-  // tab
-  $('.tab-list li').click(function () {
-    var el = $(this),
-        link = el.data('tab');
-    el.siblings().removeClass('active');
-    el.addClass('active');
-    $('.tab-contents .content').each(function () {
-      var elc = $(this);
-
-      if (elc.data('content') === link) {
-        elc.fadeIn(500).addClass('active');
-        elc.siblings().fadeOut(0).removeClass('active');
-      }
-    });
-  }); // background
-
-  if (is('[data-bg]')) {
-    $('[data-bg]').each(function () {
-      var bg_src = $(this).attr('data-bg'),
-          bg_pos_x = $(this).attr('data-bg-x'),
-          bg_pos_y = $(this).attr('data-bg-y');
-      $(this).css({
-        'background-image': 'url("' + bg_src + '")',
-        'background-position': bg_pos_x + ' ' + bg_pos_y
-      });
-    });
-  } // background_color
-
-
-  if (is('[data-bg-color]')) {
-    $('[data-bg-color]').each(function () {
-      var bg_src = $(this).attr('data-bg-color');
-      $(this).css({
-        'background-color': bg_src
-      });
-    });
-  } //max-width
-
-
-  if (is('[data-max-width]')) {
-    $('[data-max-width]').each(function () {
-      var max_width = $(this).attr('data-max-width');
-      $(this).css({
-        'max-width': max_width + 'px'
-      });
-    });
-  }
-
-  $('a').click(function (e) {
-    var ahref = $(this).attr('href');
-
-    if (ahref == "" || ahref == "#") {
-      e.preventDefault();
-      alert("網站建置中 ...");
-    }
-  });
-});
-/**
- * @param  {} item
- * @param  {} type
- * @param  {} num
- * @param  {} {vardelay_time=0;for(vari=0;i<$(item
- * @param  {} .length;i++
- * @param  {} {$(item
- * @param  {} .eq(i
- * @param  {} .css(type
- * @param  {} delay_time+'s'
- */
+  return AutoType;
+}();
 
 function delay_action(item, type, num) {
   var delay_time = 0;
@@ -210,6 +111,13 @@ function delay_action(item, type, num) {
     delay_time += num;
   }
 } //指定物件的高度
+
+/**
+ * @description 這是一個抓取物件高度
+ * @param {123} tt 123
+ * @param {string} el 選擇想要知道高度位置與底部位置的物件
+ * @returns 
+ */
 
 
 function elTop(el) {
@@ -256,3 +164,19 @@ function watchElStart(els) {
 //   {dom: '#dom3', cls: 'fade',active: 'active'},
 // ]
 // watchElStart(animationArray)
+
+
+$(function () {
+  $('#googleForm #close').click(function () {
+    $('#googleForm').fadeOut();
+  });
+  $('#go-google-form').click(function (e) {
+    e.preventDefault();
+    $('#googleForm').fadeIn();
+  });
+  var font = new AutoType('.opening p');
+  $('#start').click(function () {
+    font.putFont();
+    $(this).hide();
+  });
+});
