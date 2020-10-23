@@ -1,22 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>測試</title>
+    <meta property="og:site_name" content="W&amp;H - 110/02/28 婚禮"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="W&amp;H - 110/02/28 婚禮"/>
+    <meta property="og:description" content="我們相信世界上有奇蹟，就像我們遇到了彼此的70億分之1！有些話想對你/妳們說...."/>
+    <meta property="og:image" content="/dist/images/line_fb.png"/>
+    <title>W&H - 110/02/28 婚禮</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link rel="stylesheet" href="../swiper/swiper.min.css"/>
     <link rel="stylesheet" href="../css/app.min.css"/>
   </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <h5>測試版本</h5>
-        <hr/>
-        <p>git 上傳</p>
-      </div>
+    <audio id="song-1" src="../song/pc_keyboard.mp3"></audio>
+    <audio id="song-2" src="../song/pushing_a_key.mp3"></audio>
+    <button id="start">打開請帖</button>
+    <div class="opening">
+      <p> <span>你們相信世界上有奇蹟？</span></p>
+      <p> <span>2017年4月22日我們相遇了</span></p>
+      <p> <span>2018年10月13日有了新的稱呼</span></p>
+      <p> <span>2020年05月30日我們把下半輩子交給彼此</span></p>
+      <p> <span>我們相信世界上有奇蹟，就像我們遇到了彼此的70億分之1！</span></p>
+      <p> <span>有些話想對你/妳們說</span></p>
+      <p> <span>他很宅，但總會帶我去想去的地方、照顧我的心情，所以大家，不用太擔心我</span></p>
+      <p> <span>她很Ｘ123123123123213123123123123123</span></p>
+      <p> <span>是的</span></p>
+      <p> <span>我們結婚了</span></p>
+      <p> <span>2021/02/28</span></p>
+      <p> <span>期待與妳/你相見</span></p>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="../js/app.min.js"></script>
   </body>
+  <div id="wrapper">
+    <div class="container">
+      <h2 class="logo"><img src="../images/W&amp;H.svg" alt=""/></h2>
+      <div class="wedding-info row">
+        <div class="col s6">
+          <p>新郎</p>
+          <h3>陳坤旺<i>先生</i></h3>
+        </div>
+        <div class="col s6">
+          <p>新娘</p>
+          <h3>徐欣如<i>小姐</i></h3>
+        </div>
+      </div>
+      <div class="wedding-info row">
+        <div class="col s6">
+          <p>男方家長</p>
+          <h3>陳順成<i>爸爸</i>&nbsp;/&nbsp;蔡靜枝<i>媽媽</i></h3>
+        </div>
+        <div class="col s6">
+          <p>女方家長</p>
+          <h3>徐進發<i>爸爸</i>&nbsp;/&nbsp;吳英花<i>媽媽</i></h3>
+        </div>
+      </div>
+      <div class="wedding-info">
+        <ul>
+          <li><span>宴客時間</span>
+            <p><font color="red">2021/02/28</font> 12:00(午宴)</p>
+          </li>
+          <li><span>地點</span>
+            <p>板橋海釣族（新北市板橋區文化路二段126號）</p>
+          </li>
+          <li><span>電話</span><a href="tel:0222512746">02-22512746</a></li>
+        </ul>
+      </div><a id="go-google-form" href="#">我要參加</a>
+    </div>
+  </div>
+  <div id="googleForm">
+    <button id="close"> </button><iframe src="https://docs.google.com/forms/d/e/1FAIpQLScW7RlLJdR1stYu0RhyIXU-kq8SOJQQUvIXa0UZx_YPkBCzTA/viewform?embedded=true" width="640" height="2649" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="../swiper/swiper.min.js"></script>
+  <script src="../js/app.min.js"></script>
 </html>
